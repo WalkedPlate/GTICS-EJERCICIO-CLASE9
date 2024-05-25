@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
+          crossorigin="anonymous">
+    <title>Personajes</title>
+</head>
+<body>
+
+
+<div style="padding-bottom: 15px;" class="container">
+
+    <h2 th:text="${personaje.id==0 || personaje.id == null ? 'Nuevo Personaje':'Editar Personaje #' + personaje.id}"></h2>
+    <form method="post" th:action="@{/personaje/save}" th:object="${personaje}">
+
+        <input th:field="*{id}" type="hidden"/>
+
+        <div class="form-group col-10">
+            <label >Nombre</label>
+            <input th:field="*{name}" th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"  type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div class="form-group col-10">
+            <label >Wiki URL</label>
+            <input th:field="*{url}" th:classappend="${#fields.hasErrors('url')?'is-invalid':''}"  type="text" class="form-control" >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('url')}" th:errors="*{url}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Identidad</label>
+            <input th:field="*{identity}" th:classappend="${#fields.hasErrors('identity')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('identity')}" th:errors="*{identity}"></div>
+        </div>
+        <div class="form-group col-10">
+            <label >Afiliación</label>
+            <input th:field="*{align}" th:classappend="${#fields.hasErrors('align')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('align')}" th:errors="*{align}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Ojos</label>
+            <input th:field="*{eye}" th:classappend="${#fields.hasErrors('eye')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('eye')}" th:errors="*{eye}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Pelo</label>
+            <input th:field="*{hair}" th:classappend="${#fields.hasErrors('hair')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('hair')}" th:errors="*{hair}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Sexo</label>
+            <input th:field="*{sex}" th:classappend="${#fields.hasErrors('sex')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Gsm</label>
+            <input th:field="*{gsm}" th:classappend="${#fields.hasErrors('gsm')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('gsm')}" th:errors="*{gsm}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Con vida</label>
+            <input th:field="*{alive}" th:classappend="${#fields.hasErrors('alive')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('alive')}" th:errors="*{alive}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Apariciones</label>
+            <input th:field="*{appearances}" th:classappend="${#fields.hasErrors('appearances')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('appearances')}" th:errors="*{appearances}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Primera Aparición</label>
+            <input th:field="*{firstAppearance}" th:classappend="${#fields.hasErrors('firstAppearance')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstAppearance')}" th:errors="*{firstAppearance}"></div>
+        </div>
+
+        <div class="form-group col-10">
+            <label >Año</label>
+            <input th:field="*{year}" th:classappend="${#fields.hasErrors('year')?'is-invalid':''}" type="text" class="form-control"  >
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></div>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary"
+                th:text="${personaje.id==0? 'Guardar':'Actualizar'}">Actualizar
+        </button>
+        <a th:href="@{/personaje/list}" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>
