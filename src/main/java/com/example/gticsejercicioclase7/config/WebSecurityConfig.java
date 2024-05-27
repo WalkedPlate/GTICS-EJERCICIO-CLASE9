@@ -18,10 +18,12 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.DefaultSavedRequest;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.sql.DataSource;
 
 @Configuration
+@CrossOrigin
 public class WebSecurityConfig {
 
     final DataSource dataSource;
@@ -89,17 +91,21 @@ public class WebSecurityConfig {
 
 
         http.authorizeHttpRequests((authorize) -> authorize
-               .requestMatchers("/personaje/list").hasAnyAuthority("EDITOR", "ADMIN","USER")
-                .requestMatchers("/personaje/new").hasAnyAuthority("EDITOR", "ADMIN")
-                .requestMatchers("/personaje/edit").hasAnyAuthority("EDITOR", "ADMIN")
-                .requestMatchers("/personaje/delete").hasAnyAuthority("ADMIN")
+               //.requestMatchers("/personaje/list").hasAnyAuthority("EDITOR", "ADMIN","USER")
+                //.requestMatchers("/personaje/new").hasAnyAuthority("EDITOR", "ADMIN")
+                //.requestMatchers("/personaje/edit").hasAnyAuthority("EDITOR", "ADMIN")
+                //.requestMatchers("/personaje/delete").hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll()
                 )
         ;
 
+        http.csrf(a -> a.disable());
+
+
 
         return http.build();
     }
+
 
 
 
