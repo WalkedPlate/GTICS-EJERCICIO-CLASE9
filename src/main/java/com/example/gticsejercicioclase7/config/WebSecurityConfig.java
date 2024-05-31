@@ -91,16 +91,17 @@ public class WebSecurityConfig {
 
 
         http.authorizeHttpRequests((authorize) -> authorize
-               //.requestMatchers("/personaje/list").hasAnyAuthority("EDITOR", "ADMIN","USER")
-                //.requestMatchers("/personaje/new").hasAnyAuthority("EDITOR", "ADMIN")
-                //.requestMatchers("/personaje/edit").hasAnyAuthority("EDITOR", "ADMIN")
-                //.requestMatchers("/personaje/delete").hasAnyAuthority("ADMIN")
+                .requestMatchers("/ws/personaje/list").hasAnyAuthority("EDITOR", "ADMIN","USER")
+                .requestMatchers("/ws/personaje/new").hasAnyAuthority("EDITOR", "ADMIN")
+                .requestMatchers("/ws/personaje/edit").hasAnyAuthority("EDITOR", "ADMIN")
+                .requestMatchers("/ws/personaje/delete").hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll()
                 )
         ;
 
         http.csrf(a -> a.disable());
-
+        http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.httpBasic(Customizer.withDefaults());
 
 
         return http.build();
