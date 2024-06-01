@@ -41,10 +41,10 @@ public class WebSecurityConfig {
     @Bean
     public UserDetailsManager users(DataSource dataSource){
         JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
-        String sql1 = "SELECT email,password,status FROM users WHERE email = ?";
-        String sql2 = "SELECT u.email,r.name FROM users u "
+        String sql1 = "SELECT username,password,status FROM users WHERE username = ?";
+        String sql2 = "SELECT u.username,r.name FROM users u "
                 + "INNER JOIN roles r ON (u.idrol = r.id) "
-                + "WHERE u.email = ?";
+                + "WHERE u.username = ?";
 
         users.setUsersByUsernameQuery(sql1);
         users.setAuthoritiesByUsernameQuery(sql2);
@@ -55,6 +55,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        /*
          http.formLogin(formLogin ->
              formLogin
                      .loginPage("/openLoginWindow")
@@ -70,25 +71,13 @@ public class WebSecurityConfig {
                             session.setAttribute("usuario", usersRepository.findByEmail(authentication.getName()));
 
 
-                            //si vengo por url -> defaultSR existe
-                            if (defaultSavedRequest != null) {
 
-                                String targetURl = defaultSavedRequest.getRequestURL();
 
-                                new DefaultRedirectStrategy().sendRedirect(request, response, targetURl);
+                        })); */
 
-                            } else { //estoy viniendo del botón de login
-                                String rol = "";
-                                for (GrantedAuthority role : authentication.getAuthorities()) {
-                                    rol = role.getAuthority();
-                                    break;
-                                }
-
-                                response.sendRedirect("/personaje/list");
-
-                            }
-                        }));
-
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/ws/personaje/list").hasAnyAuthority("EDITOR", "ADMIN","USER")
@@ -99,9 +88,7 @@ public class WebSecurityConfig {
                 )
         ;
 
-        http.csrf(a -> a.disable());
-        http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.httpBasic(Customizer.withDefaults());
+
 
 
         return http.build();
