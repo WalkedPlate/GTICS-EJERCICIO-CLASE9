@@ -80,10 +80,10 @@ public class WebSecurityConfig {
         http.httpBasic(Customizer.withDefaults());
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/ws/personaje/list").hasAnyAuthority("EDITOR", "ADMIN","USER")
-                .requestMatchers("/ws/personaje/new").hasAnyAuthority("EDITOR", "ADMIN")
-                .requestMatchers("/ws/personaje/edit").hasAnyAuthority("EDITOR", "ADMIN")
-                .requestMatchers("/ws/personaje/delete").hasAnyAuthority("ADMIN")
+                .requestMatchers("/ws/personaje/list","/ws/personaje/list/**").hasAnyAuthority("EDITOR", "ADMIN","USER")
+                .requestMatchers("/ws/personaje/get","/ws/personaje/get/**").hasAnyAuthority("EDITOR", "ADMIN","USER")
+                .requestMatchers("/ws/personaje/save","/ws/personaje/save/**").hasAnyAuthority("EDITOR", "ADMIN")
+                .requestMatchers("/ws/personaje/delete","/ws/personaje/delete/**").hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll()
                 )
         ;
